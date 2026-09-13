@@ -704,6 +704,7 @@ function Index() {
     }
     toast.success("Parola başarıyla değiştirildi");
     setParolaDegistirAcik(false);
+    ayarlaraDon();
     setEskiParola("");
     setYeniParola("");
     setYeniParolaTekrar("");
@@ -1841,6 +1842,7 @@ function Index() {
               setYeniParola("");
               setYeniParolaTekrar("");
               setParolaDegistirHata(null);
+              ayarlaraDon();
             }
           }}
         >
@@ -2035,7 +2037,10 @@ function Index() {
         <Dialog
           open={yeniTalebeAcik !== null}
           onOpenChange={(o) => {
-            if (!o) setYeniTalebeAcik(null);
+            if (!o) {
+              setYeniTalebeAcik(null);
+              ayarlaraDon();
+            }
           }}
         >
           <DialogContent className="flex h-dvh max-h-none w-full max-w-full flex-col gap-3 overflow-y-auto rounded-none border-0 p-4 sm:p-6">
