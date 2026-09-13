@@ -423,13 +423,27 @@ function Index() {
   const [mailAcik, setMailAcik] = useState(false);
   // Panel menüden açıldıysa, kapanınca menüye geri dön
   const menudenAcildi = useRef(false);
+  // Alt ekran Ayarlar'dan açıldıysa, kapanınca Ayarlar'a geri dön
+  const ayarlardanAcildi = useRef(false);
+  const ayarlaraDon = () => {
+    if (ayarlardanAcildi.current) {
+      ayarlardanAcildi.current = false;
+      setAyarlarAcik(true);
+    }
+  };
   const panelKapat =
     (kapat: (v: boolean) => void) =>
     (acik: boolean) => {
       kapat(acik);
-      if (!acik && menudenAcildi.current) {
-        menudenAcildi.current = false;
-        setMenuAcik(true);
+      if (!acik) {
+        if (ayarlardanAcildi.current) {
+          ayarlaraDon();
+          return;
+        }
+        if (menudenAcildi.current) {
+          menudenAcildi.current = false;
+          setMenuAcik(true);
+        }
       }
     };
   const ayarlarKapat = () => panelKapat(setAyarlarAcik)(false);
@@ -621,6 +635,7 @@ function Index() {
     if (yeniTalebe.grup) patch.grup = yeniTalebe.grup;
     void talebeEkle(patch);
     setYeniTalebeAcik(null);
+    ayarlaraDon();
     toast.success(`${isim} eklendi`);
   };
 
@@ -689,6 +704,7 @@ function Index() {
     }
     toast.success("Parola başarıyla değiştirildi");
     setParolaDegistirAcik(false);
+    ayarlaraDon();
     setEskiParola("");
     setYeniParola("");
     setYeniParolaTekrar("");
@@ -1636,6 +1652,7 @@ function Index() {
                 type="button"
                 className="flex w-full items-center gap-3 rounded-md border border-border/60 px-3 py-2 text-left transition-colors hover:bg-accent"
                 onClick={() => {
+                  ayarlardanAcildi.current = true;
                   setAyarlarAcik(false);
                   setEskiParola("");
                   setYeniParola("");
@@ -1652,7 +1669,9 @@ function Index() {
                 className="flex w-full items-center gap-3 rounded-md border border-border/60 px-3 py-2 text-left transition-colors hover:bg-accent"
                 onClick={() => {
                   setAyarlarAcik(false);
-                  setTimeout(() => hafizlikPdf(), 150);
+                  setTimeout(() => {
+                    void hafizlikPdf().finally(() => setAyarlarAcik(true));
+                  }, 150);
                 }}
               >
                 <FileDown className="h-4 w-4 text-muted-foreground" />
@@ -1684,7 +1703,9 @@ function Index() {
                   onClick={() => {
                     const secim = aidatIndirAy;
                     setAyarlarAcik(false);
-                    setTimeout(() => void aidatPdf(secim), 150);
+                    setTimeout(() => {
+                      void aidatPdf(secim).finally(() => setAyarlarAcik(true));
+                    }, 150);
                   }}
                 >
                   <FileDown className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -1696,7 +1717,9 @@ function Index() {
                   onClick={() => {
                     const secim = aidatIndirAy;
                     setAyarlarAcik(false);
-                    setTimeout(() => void aidatExcel(secim), 150);
+                    setTimeout(() => {
+                      void aidatExcel(secim).finally(() => setAyarlarAcik(true));
+                    }, 150);
                   }}
                 >
                   <FileDown className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -1707,7 +1730,9 @@ function Index() {
                   className="flex h-full flex-col items-center justify-center gap-1 rounded-md border border-border/60 px-1 py-2 text-center transition-colors hover:bg-accent"
                   onClick={() => {
                     setAyarlarAcik(false);
-                    setTimeout(() => aidatListePdf(), 150);
+                    setTimeout(() => {
+                      void aidatListePdf().finally(() => setAyarlarAcik(true));
+                    }, 150);
                   }}
                 >
                   <FileDown className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -1718,7 +1743,9 @@ function Index() {
                   className="flex h-full flex-col items-center justify-center gap-1 rounded-md border border-border/60 px-1 py-2 text-center transition-colors hover:bg-accent"
                   onClick={() => {
                     setAyarlarAcik(false);
-                    setTimeout(() => aidatListeExcel(), 150);
+                    setTimeout(() => {
+                      void aidatListeExcel().finally(() => setAyarlarAcik(true));
+                    }, 150);
                   }}
                 >
                   <FileDown className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -1732,7 +1759,9 @@ function Index() {
                 className="flex w-full items-center gap-3 rounded-md border border-border/60 px-3 py-2 text-left transition-colors hover:bg-accent"
                 onClick={() => {
                   setAyarlarAcik(false);
-                  setTimeout(() => aidatListeSadeceIsimPdf(), 150);
+                  setTimeout(() => {
+                    void aidatListeSadeceIsimPdf().finally(() => setAyarlarAcik(true));
+                  }, 150);
                 }}
               >
                 <FileDown className="h-4 w-4 text-muted-foreground" />
@@ -1743,7 +1772,9 @@ function Index() {
                 className="flex w-full items-center gap-3 rounded-md border border-border/60 px-3 py-2 text-left transition-colors hover:bg-accent"
                 onClick={() => {
                   setAyarlarAcik(false);
-                  setTimeout(() => aidatListeSadeceIsimExcel(), 150);
+                  setTimeout(() => {
+                    void aidatListeSadeceIsimExcel().finally(() => setAyarlarAcik(true));
+                  }, 150);
                 }}
               >
                 <FileDown className="h-4 w-4 text-muted-foreground" />
@@ -1826,6 +1857,7 @@ function Index() {
               setYeniParola("");
               setYeniParolaTekrar("");
               setParolaDegistirHata(null);
+              ayarlaraDon();
             }
           }}
         >
@@ -2020,7 +2052,10 @@ function Index() {
         <Dialog
           open={yeniTalebeAcik !== null}
           onOpenChange={(o) => {
-            if (!o) setYeniTalebeAcik(null);
+            if (!o) {
+              setYeniTalebeAcik(null);
+              ayarlaraDon();
+            }
           }}
         >
           <DialogContent className="flex h-dvh max-h-none w-full max-w-full flex-col gap-3 overflow-y-auto rounded-none border-0 p-4 sm:p-6">
