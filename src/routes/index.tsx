@@ -1652,6 +1652,7 @@ function Index() {
                 type="button"
                 className="flex w-full items-center gap-3 rounded-md border border-border/60 px-3 py-2 text-left transition-colors hover:bg-accent"
                 onClick={() => {
+                  ayarlardanAcildi.current = true;
                   setAyarlarAcik(false);
                   setEskiParola("");
                   setYeniParola("");
@@ -1668,7 +1669,9 @@ function Index() {
                 className="flex w-full items-center gap-3 rounded-md border border-border/60 px-3 py-2 text-left transition-colors hover:bg-accent"
                 onClick={() => {
                   setAyarlarAcik(false);
-                  setTimeout(() => hafizlikPdf(), 150);
+                  setTimeout(() => {
+                    void hafizlikPdf().finally(() => setAyarlarAcik(true));
+                  }, 150);
                 }}
               >
                 <FileDown className="h-4 w-4 text-muted-foreground" />
@@ -1700,7 +1703,9 @@ function Index() {
                   onClick={() => {
                     const secim = aidatIndirAy;
                     setAyarlarAcik(false);
-                    setTimeout(() => void aidatPdf(secim), 150);
+                    setTimeout(() => {
+                      void aidatPdf(secim).finally(() => setAyarlarAcik(true));
+                    }, 150);
                   }}
                 >
                   <FileDown className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -1712,7 +1717,9 @@ function Index() {
                   onClick={() => {
                     const secim = aidatIndirAy;
                     setAyarlarAcik(false);
-                    setTimeout(() => void aidatExcel(secim), 150);
+                    setTimeout(() => {
+                      void aidatExcel(secim).finally(() => setAyarlarAcik(true));
+                    }, 150);
                   }}
                 >
                   <FileDown className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -1723,7 +1730,9 @@ function Index() {
                   className="flex h-full flex-col items-center justify-center gap-1 rounded-md border border-border/60 px-1 py-2 text-center transition-colors hover:bg-accent"
                   onClick={() => {
                     setAyarlarAcik(false);
-                    setTimeout(() => aidatListePdf(), 150);
+                    setTimeout(() => {
+                      void aidatListePdf().finally(() => setAyarlarAcik(true));
+                    }, 150);
                   }}
                 >
                   <FileDown className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -1734,7 +1743,9 @@ function Index() {
                   className="flex h-full flex-col items-center justify-center gap-1 rounded-md border border-border/60 px-1 py-2 text-center transition-colors hover:bg-accent"
                   onClick={() => {
                     setAyarlarAcik(false);
-                    setTimeout(() => aidatListeExcel(), 150);
+                    setTimeout(() => {
+                      void aidatListeExcel().finally(() => setAyarlarAcik(true));
+                    }, 150);
                   }}
                 >
                   <FileDown className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -1748,7 +1759,9 @@ function Index() {
                 className="flex w-full items-center gap-3 rounded-md border border-border/60 px-3 py-2 text-left transition-colors hover:bg-accent"
                 onClick={() => {
                   setAyarlarAcik(false);
-                  setTimeout(() => aidatListeSadeceIsimPdf(), 150);
+                  setTimeout(() => {
+                    void aidatListeSadeceIsimPdf().finally(() => setAyarlarAcik(true));
+                  }, 150);
                 }}
               >
                 <FileDown className="h-4 w-4 text-muted-foreground" />
@@ -1759,7 +1772,9 @@ function Index() {
                 className="flex w-full items-center gap-3 rounded-md border border-border/60 px-3 py-2 text-left transition-colors hover:bg-accent"
                 onClick={() => {
                   setAyarlarAcik(false);
-                  setTimeout(() => aidatListeSadeceIsimExcel(), 150);
+                  setTimeout(() => {
+                    void aidatListeSadeceIsimExcel().finally(() => setAyarlarAcik(true));
+                  }, 150);
                 }}
               >
                 <FileDown className="h-4 w-4 text-muted-foreground" />
