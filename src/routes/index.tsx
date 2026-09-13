@@ -423,13 +423,27 @@ function Index() {
   const [mailAcik, setMailAcik] = useState(false);
   // Panel menüden açıldıysa, kapanınca menüye geri dön
   const menudenAcildi = useRef(false);
+  // Alt ekran Ayarlar'dan açıldıysa, kapanınca Ayarlar'a geri dön
+  const ayarlardanAcildi = useRef(false);
+  const ayarlaraDon = () => {
+    if (ayarlardanAcildi.current) {
+      ayarlardanAcildi.current = false;
+      setAyarlarAcik(true);
+    }
+  };
   const panelKapat =
     (kapat: (v: boolean) => void) =>
     (acik: boolean) => {
       kapat(acik);
-      if (!acik && menudenAcildi.current) {
-        menudenAcildi.current = false;
-        setMenuAcik(true);
+      if (!acik) {
+        if (ayarlardanAcildi.current) {
+          ayarlaraDon();
+          return;
+        }
+        if (menudenAcildi.current) {
+          menudenAcildi.current = false;
+          setMenuAcik(true);
+        }
       }
     };
   const ayarlarKapat = () => panelKapat(setAyarlarAcik)(false);
