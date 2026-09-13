@@ -2491,12 +2491,17 @@ function ProfilDiyalog({
               {hocaModu && (
                 <Button
                   onClick={() => {
-                    onNotKaydet(talebe, {
-                      telefon: telefon.trim(),
-                      sinif: sinif.trim(),
-                      dogum: dogum || "",
-                      notlar: notlar.trim(),
-                    });
+                    onNotKaydet(
+                      talebe,
+                      detayliAlanlar
+                        ? {
+                            telefon: telefon.trim(),
+                            sinif: sinif.trim(),
+                            dogum: dogum || "",
+                            notlar: notlar.trim(),
+                          }
+                        : {},
+                    );
                     onClose();
                   }}
                 >
