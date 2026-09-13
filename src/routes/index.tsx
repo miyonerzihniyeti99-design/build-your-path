@@ -211,6 +211,7 @@ const SOZLUK = {
     sayfaKisa: "sf",
     cuzKisa: "cüz",
     cuzTam: ". cüz",
+    hafizlikIlerlemesi: "Hafızlık İlerlemesi",
     hedefSf: "Hedef",
     sfPerHafta: "sf/hafta",
     telefon: "Telefon",
@@ -2264,7 +2265,7 @@ function ProfilDiyalog({
   return (
     <>
       <Dialog open={!!talebe} onOpenChange={(o) => !o && onClose()}>
-        <DialogContent className="fixed flex h-dvh max-h-none w-full max-w-full flex-col overflow-hidden rounded-none border-0 p-0">
+        <DialogContent className="flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-2xl p-0">
           {hocaModu && (
             <Button
               size="icon"
