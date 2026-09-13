@@ -635,6 +635,7 @@ function Index() {
     if (yeniTalebe.grup) patch.grup = yeniTalebe.grup;
     void talebeEkle(patch);
     setYeniTalebeAcik(null);
+    ayarlaraDon();
     toast.success(`${isim} eklendi`);
   };
 
