@@ -211,6 +211,7 @@ const SOZLUK = {
     sayfaKisa: "sf",
     cuzKisa: "cüz",
     cuzTam: ". cüz",
+    hafizlikIlerlemesi: "Hafızlık İlerlemesi",
     hedefSf: "Hedef",
     sfPerHafta: "sf/hafta",
     telefon: "Telefon",
@@ -2264,7 +2265,7 @@ function ProfilDiyalog({
   return (
     <>
       <Dialog open={!!talebe} onOpenChange={(o) => !o && onClose()}>
-        <DialogContent className="fixed flex h-dvh max-h-none w-full max-w-full flex-col overflow-hidden rounded-none border-0 p-0">
+        <DialogContent className="flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-2xl p-0">
           {hocaModu && (
             <Button
               size="icon"
@@ -2408,6 +2409,34 @@ function ProfilDiyalog({
               )}
               {hata && <p className="text-xs text-destructive">{hata}</p>}
             </div>
+
+            {!kiraatGizli && (
+              <div className="mx-auto mt-4 w-full max-w-sm rounded-2xl border bg-muted/40 p-4">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium">{t("hafizlikIlerlemesi")}</span>
+                  <span className="tabular-nums text-muted-foreground">
+                    %{Math.min(100, Math.max(0, Math.round((talebe.sayfa / 604) * 100)))}
+                  </span>
+                </div>
+                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full rounded-full bg-primary transition-all duration-500"
+                    style={{
+                      width: `${Math.min(100, Math.max(0, Math.round((talebe.sayfa / 604) * 100)))}%`,
+                    }}
+                  />
+                </div>
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+                  <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium tabular-nums text-primary">
+                    {t("sayfa")} {talebe.sayfa} / 604
+                  </span>
+                  <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium tabular-nums text-primary">
+                    {cuzHesapla(talebe.sayfa)}
+                    {t("cuzTam")} / 30
+                  </span>
+                </div>
+              </div>
+            )}
 
             <div className="mt-1 space-y-2">
               {detayliAlanlar && (
