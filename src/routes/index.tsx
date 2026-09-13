@@ -2440,43 +2440,46 @@ function ProfilDiyalog({
               )}
 
 
-
-              <div className="space-y-1.5">
-                <Label className="flex items-center gap-1.5 text-sm">
-                  <Phone className="h-3.5 w-3.5" /> {t("telefon")}
-                </Label>
-                <div className="flex gap-2">
-                  <Input
-                    value={telefon}
-                    onChange={(e) => setTelefon(e.target.value.slice(0, 30))}
-                    disabled={!hocaModu}
-                    placeholder="—"
-                    inputMode="tel"
-                    type="tel"
-                    className="text-base"
-                  />
-                  {telefon.trim() && (
-                    <Button asChild size="icon" variant="outline" title={t("ara")}>
-                      <a href={`tel:${telefon.replace(/\s+/g, "")}`}>
-                        <Phone className="h-4 w-4" />
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </div>
-              <div className="space-y-1.5">
-                <Label className="flex items-center gap-1.5 text-sm">
-                  <StickyNote className="h-3.5 w-3.5" /> {t("notlar")}
-                </Label>
-                <Textarea
-                  value={notlar}
-                  onChange={(e) => setNotlar(e.target.value.slice(0, 600))}
-                  disabled={!hocaModu}
-                  rows={2}
-                  placeholder="—"
-                  className="text-base sm:min-h-[84px]"
-                />
-              </div>
+              {detayliAlanlar && (
+                <>
+                  <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1.5 text-sm">
+                      <Phone className="h-3.5 w-3.5" /> {t("telefon")}
+                    </Label>
+                    <div className="flex gap-2">
+                      <Input
+                        value={telefon}
+                        onChange={(e) => setTelefon(e.target.value.slice(0, 30))}
+                        disabled={!hocaModu}
+                        placeholder="—"
+                        inputMode="tel"
+                        type="tel"
+                        className="text-base"
+                      />
+                      {telefon.trim() && (
+                        <Button asChild size="icon" variant="outline" title={t("ara")}>
+                          <a href={`tel:${telefon.replace(/\s+/g, "")}`}>
+                            <Phone className="h-4 w-4" />
+                          </a>
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1.5 text-sm">
+                      <StickyNote className="h-3.5 w-3.5" /> {t("notlar")}
+                    </Label>
+                    <Textarea
+                      value={notlar}
+                      onChange={(e) => setNotlar(e.target.value.slice(0, 600))}
+                      disabled={!hocaModu}
+                      rows={2}
+                      placeholder="—"
+                      className="text-base sm:min-h-[84px]"
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -2488,12 +2491,17 @@ function ProfilDiyalog({
               {hocaModu && (
                 <Button
                   onClick={() => {
-                    onNotKaydet(talebe, {
-                      telefon: telefon.trim(),
-                      sinif: sinif.trim(),
-                      dogum: dogum || "",
-                      notlar: notlar.trim(),
-                    });
+                    onNotKaydet(
+                      talebe,
+                      detayliAlanlar
+                        ? {
+                            telefon: telefon.trim(),
+                            sinif: sinif.trim(),
+                            dogum: dogum || "",
+                            notlar: notlar.trim(),
+                          }
+                        : {},
+                    );
                     onClose();
                   }}
                 >
